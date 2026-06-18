@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   Input,
   OnDestroy,
@@ -21,7 +20,8 @@ import { NumericCellComponent } from '../numeric-cell/numeric-cell.component';
 @Component({
     selector: 'itsk-grid-cell-wrapper',
     template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class ItskGridCellWrapperComponent<T extends IId> implements OnInit, OnDestroy {
   init = false;
@@ -59,7 +59,6 @@ export class ItskGridCellWrapperComponent<T extends IId> implements OnInit, OnDe
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
   private getCellComponent(column: GridColumn) {
     if (column.cellComponent === null || column.cellComponent === undefined || !CellComponentBase.isPrototypeOf(column.cellComponent)) {
@@ -77,15 +76,11 @@ export class ItskGridCellWrapperComponent<T extends IId> implements OnInit, OnDe
     return column.cellComponent;
   }
   ngOnInit() {
-    // if (!CellComponentBase.isPrototypeOf(this.column.cellComponent)) {
-    //   throw new Error('Cell component must extend CellComponentBase');
-    // }
     if (!this.column) {
       return;
     }
     this.column.cellComponent = this.getCellComponent(this.column);
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory<CellComponentBase<any>>(this.column.cellComponent);
-    this.componentRef = this.viewContainerRef.createComponent<CellComponentBase<any>>(compFactory);
+    this.componentRef = this.viewContainerRef.createComponent<CellComponentBase<any>>(this.column.cellComponent);
     this.componentRef.instance.column = this.column;
     this.componentRef.instance.row = this.row;
     this.init = true;

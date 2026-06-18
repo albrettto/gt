@@ -1,4 +1,4 @@
-<div class="grid__head__cell__wrapper" [ngClass]="column?.headCellClass" (click)="sortColumn($event)">
+<div class="grid__head__cell__wrapper" [ngClass]="$safeNavigationMigration(column?.headCellClass)" (click)="sortColumn($event)">
   @if (selfIndex === 0 && rootIndex === 0 && (selectType === 'single' || selectType === 'multiple') && selectRowsBy === 'checkbox') {
     <itsk-checkbox
       (click)="stopPropagation($event)"

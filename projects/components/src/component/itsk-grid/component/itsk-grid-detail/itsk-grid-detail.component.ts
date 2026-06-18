@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   Input,
   OnInit,
@@ -17,7 +16,8 @@ import { GridRow, IId } from '../../model/grid-row';
     selector: 'itsk-grid-detail',
     template: '',
     styleUrls: ['./itsk-grid-detail.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class ItskGridDetailComponent<T extends IId> implements OnInit {
   private componentRef?: ComponentRef<DetailComponentBase<T>>;
@@ -59,15 +59,13 @@ export class ItskGridDetailComponent<T extends IId> implements OnInit {
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
 
   ngOnInit() {
     if (!this.detailComponent || !DetailComponentBase.isPrototypeOf(this.detailComponent)) {
       throw new Error('Details component must extend DetailComponentBase');
     }
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory<DetailComponentBase<T>>(this.detailComponent);
-    this.componentRef = this.viewContainerRef.createComponent<DetailComponentBase<T>>(compFactory);
+    this.componentRef = this.viewContainerRef.createComponent<DetailComponentBase<T>>(this.detailComponent);
     if (this.row) this.componentRef.instance.row = this.row;
     if (this.columns) this.componentRef.instance.columns = this.columns;
     this.componentRef.changeDetectorRef.markForCheck();

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterState } from '../../itsk-grid/model/filter-state';
 import { FilterBase } from '../model/filter-base';
 import { FilterColumn } from '../model/filter-column';
@@ -8,10 +8,11 @@ import { FilterGroupHelper } from './filter-group-helper';
 import { FilterWrapperComponent } from '../filter-wrapper/filter-wrapper.component';
 
 @Component({
-    selector: 'itsk-filter-group-wrapper',
-    templateUrl: './filter-group-wrapper.component.html',
-    styleUrls: ['./filter-group-wrapper.component.scss'],
-    imports: [FilterWrapperComponent]
+  selector: 'itsk-filter-group-wrapper',
+  templateUrl: './filter-group-wrapper.component.html',
+  styleUrls: ['./filter-group-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [FilterWrapperComponent],
 })
 export class FilterGroupWrapperComponent implements OnInit {
   @Input()

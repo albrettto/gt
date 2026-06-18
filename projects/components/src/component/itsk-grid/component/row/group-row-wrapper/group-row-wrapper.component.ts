@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   Input,
   OnInit,
@@ -16,7 +15,8 @@ import { GroupRowComponentBase } from '../../../model/group-row-component-base';
     selector: 'itsk-group-row-wrapper',
     template: '',
     styleUrls: ['./group-row-wrapper.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class GroupRowWrapperComponent<T extends IId> implements OnInit {
   init = false;
@@ -56,15 +56,13 @@ export class GroupRowWrapperComponent<T extends IId> implements OnInit {
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
 
   ngOnInit() {
     if (!GroupRowComponentBase.isPrototypeOf(this.groupRowComponent)) {
       throw new Error('Group row component must extend GroupRowComponentBase');
     }
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory<GroupRowComponentBase<T>>(this.groupRowComponent);
-    this.componentRef = this.viewContainerRef.createComponent<GroupRowComponentBase<T>>(compFactory);
+    this.componentRef = this.viewContainerRef.createComponent<GroupRowComponentBase<T>>(this.groupRowComponent);
     this.componentRef.instance.columns = this.columns;
     this.componentRef.instance.row = this.row;
     this.init = true;

@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   Input,
   OnInit,
@@ -16,7 +15,8 @@ import { GridRow, IId } from '../../model/grid-row';
     selector: 'itsk-grid-additional',
     template: '',
     styleUrls: ['./itsk-grid-additional.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class ItskGridAdditionalComponent<T extends IId> implements OnInit {
   private componentRef?: ComponentRef<any>;
@@ -38,15 +38,13 @@ export class ItskGridAdditionalComponent<T extends IId> implements OnInit {
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
 
   ngOnInit() {
     if (!this.additionalComponent || !AdditionalComponentBase.isPrototypeOf(this.additionalComponent)) {
       throw new Error('Additional component must extend AdditionalComponentBase');
     }
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory<AdditionalComponentBase<T>>(this.additionalComponent);
-    this.componentRef = this.viewContainerRef.createComponent<AdditionalComponentBase<T>>(compFactory);
+    this.componentRef = this.viewContainerRef.createComponent<AdditionalComponentBase<T>>(this.additionalComponent);
     this.componentRef.instance.locked = this.locked;
     this.componentRef.instance.row = this.row;
     this.componentRef.instance.columns = this.columns$;

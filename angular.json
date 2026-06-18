@@ -22,15 +22,11 @@
               "browser": ""
             },
             "index": "projects/app/src/index.html",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "."
-              ]
+              "includePaths": ["."]
             },
             "assets": [
               "projects/app/src/favicon.ico",
@@ -83,6 +79,17 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "testing": {
+              "aot": false,
+              "optimization": false,
+              "extractLicenses": false,
+              "assets": [
+                "projects/app/src/favicon.ico",
+                "projects/app/src/assets"
+              ],
+              "styles": ["projects/app/src/styles.scss"],
+              "polyfills": ["zone.js", "zone.js/testing"]
             }
           },
           "defaultConfiguration": "production"
@@ -106,27 +113,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
             "tsConfig": "projects/app/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "."
-              ]
-            },
-            "assets": [
-              "projects/app/src/favicon.ico",
-              "projects/app/src/assets"
-            ],
-            "styles": [
-              "projects/app/src/styles.scss"
-            ],
-            "scripts": []
+            "buildTarget": ":build:testing",
+            "runner": "vitest"
           }
         }
       }
@@ -156,10 +147,7 @@
           "builder": "@angular/build:karma",
           "options": {
             "tsConfig": "projects/components/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }

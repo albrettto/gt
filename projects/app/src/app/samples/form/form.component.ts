@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ItskDatePickerComponent, ItskNotification, ItskNotificationLevel, ItskNotificationService } from '@grafit/components';
 import { DataModel } from './model/data-model';
@@ -23,6 +23,7 @@ export class WellDatesValidator {
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, ItskDatePickerComponent],
 })
 export class FormComponent implements OnInit {

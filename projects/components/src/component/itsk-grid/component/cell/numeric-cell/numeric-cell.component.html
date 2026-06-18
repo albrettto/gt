@@ -1,5 +1,5 @@
 <span [style.display]="edit ? 'none' : 'block'" class="grid__cell_text">
-  {{ row?.data[column?.name] | itskNumber: 2 }}
+  {{ $safeNavigationMigration(row?.data[column?.name]) | itskNumber: 2 }}
 </span>
 @if (edit) {
   <input
@@ -9,5 +9,5 @@
     style="width: 0"
     [ngModel]="row.data[column?.name]"
     (ngModelChange)="row.data[column.name] = $event"
-    />
+  />
 }

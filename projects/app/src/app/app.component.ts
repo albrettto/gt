@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { IItskMenuItem, ItskIconComponent, ItskIconService, ItskMenuComponent } from '@grafit/components';
 
@@ -7,6 +7,7 @@ import { IItskMenuItem, ItskIconComponent, ItskIconService, ItskMenuComponent } 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   imports: [RouterLink, ItskMenuComponent, RouterOutlet, ItskIconComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class AppComponent {

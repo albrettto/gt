@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { AggregateComponentBase } from '../../model/aggregate-component-base';
 import { GridColumn } from '../../model/grid-column';
@@ -9,10 +9,11 @@ import { ItskGridService } from '../../service/itsk-grid.service';
 import { ItskGridAggregateWrapperComponent } from './itsk-grid-aggregate-wrapper/itsk-grid-aggregate-wrapper.component';
 
 @Component({
-    selector: 'itsk-grid-aggregate',
-    templateUrl: './itsk-grid-aggregate.component.html',
-    styleUrls: ['./itsk-grid-aggregate.component.scss'],
-    imports: [ItskGridAggregateWrapperComponent]
+  selector: 'itsk-grid-aggregate',
+  templateUrl: './itsk-grid-aggregate.component.html',
+  styleUrls: ['./itsk-grid-aggregate.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [ItskGridAggregateWrapperComponent],
 })
 export class ItskGridAggregateComponent<T extends IId> implements OnInit, OnDestroy {
   private alive = true;

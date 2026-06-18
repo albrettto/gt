@@ -5,7 +5,7 @@
       (click)="select(tab.id)"
       [class.tabs__head__item_active]="tab.id === activeId"
       [class.tabs__head__item_disabled]="tab.disabled"
-      >
+    >
       <span
         [id]="tab.id"
         class="nav-link"
@@ -14,9 +14,9 @@
         [attr.aria-controls]="!destroyOnHide || tab.id === activeId ? tab.id + '-panel' : null"
         [attr.aria-expanded]="tab.id === activeId"
         [attr.aria-disabled]="tab.disabled"
-        >
+      >
         {{ tab.title }}
-        <ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
+        <ng-template [ngTemplateOutlet]="$safeNavigationMigration(tab.titleTpl?.templateRef)"></ng-template>
       </span>
     </div>
   }
@@ -24,7 +24,7 @@
 <div class="tabs__content">
   @for (tab of tabs; track tab) {
     @if (!destroyOnHide || tab.id === activeId) {
-      <ng-template [ngTemplateOutlet]="tab.contentTpl?.templateRef"></ng-template>
+      <ng-template [ngTemplateOutlet]="$safeNavigationMigration(tab.contentTpl?.templateRef)"></ng-template>
     }
   }
 </div>
