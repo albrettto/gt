@@ -1,8 +1,8 @@
 
 import {
   ApplicationRef,
-  ComponentFactoryResolver,
   ComponentRef,
+  createComponent,
   Inject,
   Injectable,
   Injector,
@@ -25,7 +25,6 @@ export class DynamicComponentFactory {
     @Inject(DOCUMENT)
     private document$: any,
     private rendererFactory$: RendererFactory2,
-    private componentFactoryResolver$: ComponentFactoryResolver,
     private appRef$: ApplicationRef,
   ) {
     this.container$ = this.document$.body;
@@ -34,7 +33,11 @@ export class DynamicComponentFactory {
 
   createComponent<T>(component: Type<T>, contentRef: ItskContentRef, injector: Injector, container?: any): ComponentRef<T> {
     container = container ? container : this.container$;
-    const componentRef = this.componentFactoryResolver$.resolveComponentFactory(component).create(injector, contentRef.nodes);
+    const componentRef = createComponent(component, {
+      environmentInjector: this.appRef$.injector,
+      elementInjector: injector,
+      projectableNodes: contentRef.nodes,
+    });
     this.appRef$.attachView(componentRef.hostView);
     container.appendChild(componentRef.location.nativeElement);
     return componentRef;
@@ -64,8 +67,10 @@ export class DynamicComponentFactory {
   }
 
   private fromComponent(content: any, injector: Injector, context: any): ItskContentRef {
-    const componentFactory = this.componentFactoryResolver$.resolveComponentFactory<any>(content);
-    const componentRef = componentFactory.create(injector);
+    const componentRef = createComponent<any>(content, {
+      environmentInjector: this.appRef$.injector,
+      elementInjector: injector,
+    });
     for (const key in context) {
       if (context.hasOwnProperty(key)) {
         componentRef.instance[key] = context.key;

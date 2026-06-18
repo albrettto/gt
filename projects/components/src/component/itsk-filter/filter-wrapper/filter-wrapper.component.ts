@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   EventEmitter,
   Input,
@@ -28,7 +27,8 @@ import { StringFilterComponent } from '../string-filter/string-filter.component'
     selector: 'itsk-filter-wrapper',
     template: '',
     styleUrls: ['./filter-wrapper.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FilterWrapperComponent implements OnInit, OnDestroy, OnChanges {
   private subs = true;
@@ -61,7 +61,6 @@ export class FilterWrapperComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {}
@@ -88,8 +87,7 @@ export class FilterWrapperComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.column$.filterComponent = this.getFilterComponent(this.column$);
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory<FilterComponentBase>(this.column$.filterComponent);
-    this.componentRef = this.viewContainerRef.createComponent<FilterComponentBase>(compFactory);
+    this.componentRef = this.viewContainerRef.createComponent<FilterComponentBase>(this.column$.filterComponent);
     this.componentRef.instance.column = this.column$;
     this.componentRef.instance.state = this.state$;
     this.init = true;

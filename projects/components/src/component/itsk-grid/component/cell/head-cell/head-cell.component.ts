@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { GridColumn } from '../../../model/grid-column';
 import { HeadCellComponentBase } from '../../../model/head-cell-component-base';
 import { DefaultHeadCellComponent } from '../default-head-cell/default-head-cell.component';
@@ -6,7 +6,8 @@ import { DefaultHeadCellComponent } from '../default-head-cell/default-head-cell
 @Component({
     selector: 'itsk-head-cell',
     template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class HeadCellComponent implements OnInit {
   private componentRef?: ComponentRef<HeadCellComponentBase>;
@@ -46,7 +47,6 @@ export class HeadCellComponent implements OnInit {
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
   ) {}
 
   private getHeadCellComponent(column: GridColumn) {
@@ -61,15 +61,11 @@ export class HeadCellComponent implements OnInit {
   }
 
   ngOnInit() {
-    // if (!HeadCellComponentBase.isPrototypeOf(this.column.headCellComponent)) {
-    //   throw new Error('Head cell component must extend HeadCellComponentBase');
-    // }
     if (!this.column) {
       return;
     }
     this.column.headCellComponent = this.getHeadCellComponent(this.column);
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory<HeadCellComponentBase>(this.column.headCellComponent);
-    this.componentRef = this.viewContainerRef.createComponent<HeadCellComponentBase>(compFactory);
+    this.componentRef = this.viewContainerRef.createComponent<HeadCellComponentBase>(this.column.headCellComponent);
     this.componentRef.instance.column = this.column;
     this.componentRef.instance.filtered = this.filtered$;
     this.componentRef.instance.sorted = this.sorted$;
