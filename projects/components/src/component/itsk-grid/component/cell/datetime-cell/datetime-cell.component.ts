@@ -1,17 +1,18 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ItskDatePickerComponent } from '../../../../itsk-date-picker/itsk-date-picker/itsk-date-picker.component';
 import { CellComponentBase } from '../../../model/cell-component-base';
 import { GridColumn } from '../../../model/grid-column';
 import { GridRow, IId } from '../../../model/grid-row';
 import { ItskGridService } from '../../../service/itsk-grid.service';
-import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'itsk-datetime-cell',
-    templateUrl: './datetime-cell.component.html',
-    styleUrls: ['./datetime-cell.component.scss'],
-    imports: [ItskDatePickerComponent, FormsModule, DatePipe]
+  selector: 'itsk-datetime-cell',
+  templateUrl: './datetime-cell.component.html',
+  styleUrls: ['./datetime-cell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [ItskDatePickerComponent, FormsModule, DatePipe],
 })
 export class DatetimeCellComponent<T extends IId> extends CellComponentBase<T> implements OnInit {
   @Input() column?: GridColumn;

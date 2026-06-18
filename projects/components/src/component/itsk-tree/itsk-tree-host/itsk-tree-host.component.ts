@@ -1,12 +1,13 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { ItskTreeControl } from '../model/itsk-tree-control';
 import { NgTemplateOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ItskTreeControl } from '../model/itsk-tree-control';
 
 @Component({
-    selector: 'itsk-tree-host',
-    templateUrl: './itsk-tree-host.component.html',
-    styleUrls: ['./itsk-tree-host.component.scss'],
-    imports: [NgTemplateOutlet]
+  selector: 'itsk-tree-host',
+  templateUrl: './itsk-tree-host.component.html',
+  styleUrls: ['./itsk-tree-host.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [NgTemplateOutlet],
 })
 export class ItskTreeHostComponent implements OnInit {
   @Input() data: any[] = [];

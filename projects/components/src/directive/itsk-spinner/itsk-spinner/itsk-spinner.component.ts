@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'itsk-itsk-spinner',
-    templateUrl: './itsk-spinner.component.html',
-    styleUrls: ['./itsk-spinner.component.scss'],
+  selector: 'itsk-itsk-spinner',
+  templateUrl: './itsk-spinner.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./itsk-spinner.component.scss'],
 })
 export class ItskSpinnerComponent implements OnInit {
   constructor() {}

@@ -6,7 +6,7 @@
     <span class="input container">
       <itsk-date-picker
         class="container_auto"
-        [ngModel]="filter.value?.greaterThan"
+        [ngModel]="$safeNavigationMigration(filter.value?.greaterThan)"
         [fixed]="true"
         (ngModelChange)="filter.value.greaterThan = $event"
       ></itsk-date-picker>
@@ -16,7 +16,7 @@
     <span class="input container">
       <itsk-date-picker
         class="container_auto"
-        [ngModel]="filter.value?.lessThan"
+        [ngModel]="$safeNavigationMigration(filter.value?.lessThan)"
         [fixed]="true"
         (ngModelChange)="filter.value.lessThan = $event"
       ></itsk-date-picker>

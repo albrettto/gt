@@ -1,12 +1,23 @@
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IModalResult } from '../model/imodal-result';
 import { ItskModalCloseReason } from '../model/itsk-modal-close-reason.enum';
 import { ItskModalConfig } from '../model/itsk-modal-config';
 
 @Component({
-    selector: 'itsk-modal-container',
-    templateUrl: './itsk-modal-container.component.html',
-    styleUrls: ['./itsk-modal-container.component.scss']
+  selector: 'itsk-modal-container',
+  templateUrl: './itsk-modal-container.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./itsk-modal-container.component.scss'],
 })
 export class ItskModalContainerComponent implements OnInit {
   @Input() config?: ItskModalConfig;

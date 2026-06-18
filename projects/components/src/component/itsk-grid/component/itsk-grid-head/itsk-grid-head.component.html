@@ -1,10 +1,5 @@
 @if (locked?.length) {
-  <div
-    class="grid__head__left"
-    [style.flex-grow]="lockedFlex"
-    [style.min-width.px]="lockedBasis"
-    [style.flex-basis.px]="lockedBasis"
-    >
+  <div class="grid__head__left" [style.flex-grow]="lockedFlex" [style.min-width.px]="lockedBasis" [style.flex-basis.px]="lockedBasis">
     <ng-container>
       <div class="grid__head__row grid__head__row__left">
         @for (column of locked; track track(i, column); let i = $index) {
@@ -35,7 +30,7 @@
         @if (!column.hidden) {
           <itsk-grid-head-group
             class="grid__head__group"
-            [rootIndex]="i + locked?.length"
+            [rootIndex]="i + $safeNavigationMigration(locked?.length)"
             [selfIndex]="0"
             [column]="column"
             [allColumns]="columns"
